@@ -1,122 +1,168 @@
 <!DOCTYPE html>
 <html lang="ru">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Яндекс Практикум. Проект 3. Место">
-  <meta name="author" content="Александр Моругин">
-  <meta name="keywords" content="html, css, javascript">
-  <title>Место</title>
-  <!--<script type="module" type="text/javascript" src="./src/components/index.js" defer></script>-->
-</head>
-<body class="page">
-<!-- Содержимое сайта -->
-  <header class="header">
-    <img class="header__logo" src="<%=require('./images/logo.svg')%>" alt="Логотип проекта Место.">
-  </header>  
-  <main class="content">
-    <section class="profile">
-      <div class="profile__avatar">
-        <img class="profile__avatar-image" src="<%=require('./images/cousteau.jpg')%>" alt="Аватар.">
-        <button class="profile__avatar-edit" type="button"></button>
-      </div>    
-      <div class="profile__info">
-        <h1 class="profile__title">Жак-Ив Кусто</h1>
-        <p class="profile__subtitle">Исследователь океана</p>
-        <button class="profile__edit" type="button" aria-label="Редактировать профиль."></button>
-      </div>
-      <button class="profile__add" type="button" aria-label="Добавить фото."></button>      
-    </section>
-    <section class="elements">
-<!-- Сюда будут вставляться карточки -->
-    </section>
-  </main>
-  <footer class="footer">
-    <p class="footer__copyright">&copy; 2022 Mesto Russia</p>
-  </footer>
-<!-- Модальное окно - Редактировать профиль -->
-  <div class="popup popup_profile_open">
-    <div class="popup__container">
-      <button type="button" class="popup__button-close" aria-label="Закрыть диалоговое окно."></button>
-      <form class="form" name="profile" method="POST" novalidate>
-        <h2 class="form__heading">Редактировать профиль</h2>  
-        <fieldset class="form__input-container">
-          <input id="user-input" class="form__input" type="text" pattern="^[а-яА-ЯёЁa-zA-Z\s_-]+$" name="user" placeholder="Имя"
-            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы." required minlength="2" maxlength="40">
-          <p class="user-input-error form__input-error">Вы пропустили это поле.</p>
-          <input id="description-input" class="form__input" type="text" pattern="^[а-яА-ЯёЁa-zA-Z\s_-]+$" name="description" placeholder="О себе"
-            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы." required minlength="2" maxlength="200">
-          <p class="description-input-error form__input-error">Вы пропустили это поле.</p>
-        </fieldset>
-        <button type="submit" class="form__button form__button_profile">Сохранить</button>               
-      </form>    
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesto</title>
+  </head>
+
+  <body class="body">
+    <div class="page">
+      <section class="popup popup_edit-profile">
+        <div class="popup__container">
+          <button
+            class="button-close button-close_edit-profile"
+            type="button"
+            form="profile"
+          ></button>
+
+          <form
+            class="form form_edit-profile"
+            name="profile"
+            id="profile"
+            novalidate
+          >
+            <h2 class="popup__title">Редактировать профиль</h2>
+            <label class="form__label">
+              <input
+                class="form__input form__input_type-name"
+                type="text"
+                name="login"
+                id="login"
+                placeholder="Имя"
+                minlength="2"
+                maxlength="40"
+                required>
+              <span class="error login-error"></span
+            ></label>
+            <label class="form__label"
+              ><input
+                class="form__input form__input_type-job"
+                type="text"
+                name="job"
+                id="job"
+                placeholder="О себе"
+                minlength="2"
+                maxlength="200"
+                required>
+              <span class="error job-error"></span
+            ></label>
+            <button
+              class="button-submit button-submit_edit-profile button-submit_disabled"
+              type="submit"
+              form="profile"
+              disabled
+            >
+              Сохранить
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section class="popup popup_add-photo">
+        <div class="popup__container">
+          <button
+            class="button-close button-close_add-photo"
+            type="button"
+            form="formAddPhoto"
+          ></button>
+
+          <form
+            class="form form_add-photo"
+            name="formAddPhoto"
+            id="formAddPhoto"
+            novalidate
+          >
+            <h2 class="popup__title">Новое место</h2>
+            <label class="form__label"
+              ><input
+                class="form__input form__input_photo-title"
+                type="text"
+                name="title"
+                id="title"
+                placeholder="Название"
+                minlength="2"
+                maxlength="30"
+                required>
+              <span class="error title-error"></span
+            ></label>
+            <label class="form__label"
+              ><input
+                class="form__input form__input_photo-link"
+                type="url"
+                name="link"
+                id="link"
+                placeholder="Ссылка на картинку"
+                required>
+              <span class="error link-error"></span
+            ></label>
+            <button
+              class="button-submit button-submit_add-photo button-submit_disabled"
+              type="submit"
+              form="formAddPhoto"
+              disabled
+            >
+              Создать
+            </button>
+          </form>
+        </div>
+      </section>
+
+      <section
+        class="popup popup_zoom"
+        aria-label="Всплывающее окно увеличения фото карточки(места)"
+      >
+        <div class="popup__zoom-container">
+          <button class="button-close button-close_zoom" type="button"></button>
+          <figure class="popup__zoom-photo">
+            <img class="popup__photo" src="#" alt="#">
+            <figcaption class="popup__zoom-title">
+              <p class="popup__photo-title"></p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <header class="header">
+        <img
+          class="header__logo"
+          src="<%=require('./src/images/logo.svg')%>"
+          alt="Логотип: Mesto Russia">
+      </header>
+
+      <main class="container">
+        <section class="profile">
+          <img
+            class="profile__avatar"
+            src="<%=require('./src/images/avatar.jpg')%>"
+            alt="Аватар">
+          <div class="profile__info">
+            <div class="profile__content">
+              <h1 class="profile__title">Жак-Ив Кусто</h1>
+              <button class="button-edit" name="edit" type="button"></button>
+            </div>
+            <p class="profile__subtitle">Исследователь океана</p>
+          </div>
+          <button class="button-add" name="add" type="button"></button>
+        </section>
+
+        <section class="elements" aria-label="Записи в профиле"></section>
+      </main>
+
+      <footer class="footer">
+        <p class="footer__copyright">© 2020 Mesto Russia</p>
+      </footer>
     </div>
-  </div>
-  <!-- Модальное окно - Новое место -->  
-  <div class="popup popup_place_open">
-    <div class="popup__container">
-      <button type="button" class="popup__button-close" aria-label="Закрыть диалоговое окно."></button>
-      <form class="form" name="place" method="POST">
-        <h2 class="form__heading">Новое место</h2>  
-        <fieldset class="form__input-container">
-          <input id="title-input" class="form__input" type="text" pattern="^[а-яА-ЯёЁa-zA-Z\s_-]+$" name="title" placeholder="Название" 
-            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы." required minlength="2" maxlength="30">
-          <p class="title-input-error form__input-error">Вы пропустили это поле.</p>
-          <input id="source-input" class="form__input" type="url" name="source" placeholder="Ссылка на картинку" required>
-          <p class="source-input-error form__input-error">Введите адрес сайта.</p>
-        </fieldset>
-        <button type="submit" class="form__button form__button_place form__button_disabled" aria-label="Создать новое место." disabled>Создать</button>                 
-      </form>    
-    </div>
-  </div>
-  <!-- Модальное окно - Открытие попапа с картинкой -->
-  <div class="popup popup_image_open">
-    <div class="popup__container-image">
-      <button type="button" class="popup__button-close" aria-label="Закрыть просмотр."></button> 
-      <div class="popup__elements">
-        <img class="popup__picture" alt="">
-        <p class="popup__paragraph">Здесь будет название картинки</p>  
-      </div>      
-    </div>
-  </div> 
-  <!-- Модальное окно - Вы уверены? -->  
-  <div class="popup popup_sure_open">
-    <div class="popup__container">
-      <button type="button" class="popup__button-close" aria-label="Закрыть диалоговое окно."></button>
-      <form class="form form__sure" name="sure" method="POST">
-        <h2 class="form__heading">Вы уверены?</h2>  
-        <button type="submit" class="form__button form__button_sure" aria-label="Подтвердить.">Да</button>                 
-      </form>    
-    </div>
-  </div>
-  <!-- Модальное окно - Обновить аватар -->  
-  <div class="popup popup_avatar_open">
-    <div class="popup__container">
-      <button type="button" class="popup__button-close" aria-label="Закрыть диалоговое окно."></button>
-      <form class="form" name="avatar" method="POST">
-        <h2 class="form__heading">Обновить аватар</h2>
-        <fieldset class="form__input-container">
-          <input id="avatar-input" class="form__input" type="url" name="srcavatar" placeholder="Ссылка на картинку" required>
-          <p class="avatar-input-error form__input-error">Введите адрес сайта.</p>
-        </fieldset>
-        <button type="submit" class="form__button form__button_avatar" aria-label="Сохранить обновление.">Сохранить</button>                 
-      </form>    
-    </div>
-  </div> 
-<!-- Template - Заготовка карточки -->
-<template id="item-template">
-  <div class="elements__item">        
-    <img class="elements__image" alt="Название картинки.">
-    <div class="elements__like">
-      <h2 class="elements__title">Здесь будет название картинки</h2>
-      <div class="elements__heart-area">
-        <button class="elements__heart" type="button" aria-label="Поставить лайк."></button>
-        <p class="elements__heart-count"></p>
-      </div>      
-    </div>         
-    <button class="elements__trash" type="button" aria-label="Удалить."></button>
-  </div>
-</div> 
-</template>
-</body>
+
+    <template class="card-template" id="cardTemplate">
+      <article class="element">
+        <button class="button-delete" type="button" name="delete"></button>
+        <img class="element__cover" src="https://" alt="#">
+        <div class="element__caption">
+          <h2 class="element__title"></h2>
+          <button class="button-like" type="button" name="like"></button>
+        </div>
+      </article>
+    </template>
+  </body>
 </html>
