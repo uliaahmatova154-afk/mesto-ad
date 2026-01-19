@@ -1,14 +1,26 @@
 {
-  "name": "mesto-project",
+  "name": "mesto-ad",
   "version": "1.0.0",
-  "description": "Проектная работа Mesto с валидацией форм",
+  "description": "Стартовый набор для выполнения проектной работы Место",
+  "main": "index.js",
   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "build": "npx vite build"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dimonkayaking/mesto-ad.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/dimonkayaking/mesto-ad/issues"
+  },
+  "homepage": "https://github.com/dimonkayaking/mesto-ad#readme",
   "devDependencies": {
-    "vite": "^5.0.0"
-  },
-  "type": "module"
+    "vite": "^7.2.7"
+  }
 }
