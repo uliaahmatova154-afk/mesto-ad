@@ -1,38 +1,31 @@
-name: Deploy to Public Pages Repository
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches:
-      - main
-  workflow_dispatch:
+    branches: [ main ]
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v3
         with:
-            node-version: '>=22.12'
-            cache: 'npm'
+          fetch-depth: 0  # важно!
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build project
+      - name: Build
         run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.PUBLIC_PAGES_TOKEN }}
-          external_repository: ${{ secrets.PUBLIC_PAGES_REPO }}
-          publish_dir: ./dist
-          publish_branch: ${{ secrets.PUBLIC_PAGES_BRANCH || 'main' }}
-          user_name: 'github-actions[bot]'
-          user_email: 'github-actions[bot]@users.noreply.github.com'
-          commit_message: 'deploy: update build'
+          github_token: ${{ secrets.GH_PAGES_TOKEN }}
+          publish_dir: ./dist  # измените на вашу папку билда
+          publish_branch: gh-pages  # или оставьте по умолчанию
